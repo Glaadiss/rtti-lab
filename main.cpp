@@ -1,6 +1,7 @@
 #include <iostream>
-#include <ctime>
-#include <cstdlib>
+//#include <ctime>
+//#include <cstdlib>
+const int num = 10;
 
 class Animal {
 public:
@@ -35,7 +36,40 @@ Animal* randomAnimal(){
     return nullptr;
 }
 
+void randomAnimals(Animal *animals[]){
+
+    for(int i =0; i < num; i++){
+        animals[i] = randomAnimal();
+    }
+}
+
+
+void callCats(Animal *animals[]){
+    for(int i =0; i < num; i++){
+        if(typeid(Cat) == typeid(*(animals[i]))){
+            animals[i] -> speak();
+        }
+    }
+}
+
+void callCatsAndDerrived(Animal *animals[]){
+    for(int i =0; i < num; i++){
+        Animal *animal = dynamic_cast<Cat *>(animals[i]);
+        if(animal != nullptr){
+            animal->speak();
+        }
+    }
+}
+
+
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    srand(time(NULL));
+    Animal *animals[num];
+    randomAnimals(animals);
+    callCats(animals);
+    std::cout << std::endl;
+    callCatsAndDerrived(animals);
+
+
     return 0;
 }
